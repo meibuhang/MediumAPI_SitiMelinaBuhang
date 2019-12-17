@@ -1,9 +1,7 @@
-const db = require('../config/dotenv');
-const db_user = db.user;
-
+const Users = require('../models').users
 checkDuplicateUserNameOrEmail = (req, res, next) => {
     // -> Check Username is already in use
-    db_user.findOne({
+    Users.findOne({
         where: {
             username: req.body.username
         }
@@ -14,7 +12,7 @@ checkDuplicateUserNameOrEmail = (req, res, next) => {
         }
 
         // -> Check Email is already in use
-        db_user.findOne({
+        Users.findOne({
             where: {
                 email: req.body.email
             }

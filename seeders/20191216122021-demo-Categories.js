@@ -1,18 +1,18 @@
-"use strict";
+// "use strict";
 
-module.exports = {
-  up: (queryInterface, Sequelize) => {
+// module.exports = {
+//   up: (queryInterface, Sequelize) => {
 
-    return queryInterface.bulkInsert('categories', [{
+//     return queryInterface.bulkInsert('categories', [{
 
 
-    }], {});
+//     }], {});
 
-  },
+//   },
 
-  down: (queryInterface, Sequelize) => {
+//   down: (queryInterface, Sequelize) => {
 
-    return queryInterface.bulkDelete('categories', null, {});
+//     return queryInterface.bulkDelete('categories', null, {});
 
-  }
-};
+//   }
+// };

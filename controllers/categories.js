@@ -1,5 +1,4 @@
-const db = require('../config/dotenv');
-const db_cat = db.categories;
+const Categories = require('../models').Categories;
 
 exports.addCateggories = (req, res) => {
     console.log("Processing func ->Categories");
@@ -11,7 +10,7 @@ exports.addCateggories = (req, res) => {
         name: name,
         is_published: is_published
     }
-    db_cat.create(datas).then(data => {
+    Categories.create(datas).then(data => {
         res.status(200).send({
             "item": data,
             "message": "Categories success created",
@@ -27,7 +26,7 @@ exports.addCateggories = (req, res) => {
 //get All Categories
 exports.allCategories = (req, res) => {
     console.log("find All data");
-    db_cat.findAll().then(data => {
+    Categories.findAll().then(data => {
         res.status(200).send({
             "item": data,
             "message": "success",
