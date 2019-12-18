@@ -28,24 +28,32 @@ exports.signup = (req, res) => {
         })
     });
 }
-//             if (data) {
-//                 const token = jwt.sign({
-//                     id: data.id
-//                 }, 'MY-SECRET-KEY');
-//                 res.send({
-//                     id: user.id,
-//                     token
-//                 });
-//             }
-//         })
-//         .catch(Sequelize.ValidationError, err => {
-//             return res.status(406).send({
-//                 message: "Invalid username or email."
-//             });
-//         })
-//         .catch(err => {
-//             return res.status(400).send({
-//                 message: err.message
-//             });
-//         });
-// };
+
+
+//Sign In
+exports.signIn = (req, res) => {
+    Users.findOne({
+        where: {
+            username: req.body.username
+        }
+    }).then(data => {
+        if (data) {
+            const auths = bycrypt.compareSync(req.body.password, data.password);
+            if (auths) {
+                const token = jwt.sign({
+                    id: data.id
+                }, 'MY-SECRET-KEY');
+                res.status(200).send({
+                    "item": data,
+                    token,
+                    "message": "User Success Login!"
+
+                });
+            } else {
+                res.status(401).send({
+                    "message": "Invalid username or email"
+                });
+            }
+        }
+    })
+}
