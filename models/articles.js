@@ -6,13 +6,24 @@ module.exports = (sequelize, DataTypes) => {
     content: DataTypes.TEXT,
     image: DataTypes.STRING,
     category_id: DataTypes.INTEGER,
-    category_name: DataTypes.INTEGER,
+    category_name: DataTypes.STRING,
     is_published: DataTypes.TINYINT,
-    is_archiver: DataTypes.TINYINT,
+    is_archived: DataTypes.TINYINT,
     slug: DataTypes.STRING
   }, {});
-  Articles.associate = function(models) {
-    // associations can be defined here
+  Articles.associate = function (models) {
+    Articles.belongsTo(models.Categories, {
+      foreignKey: "category_id",
+      as: "categories",
+      sourceKey: "id"
+
+    })
+    Articles.belongsTo(models.Users, {
+      foreignKey: "author_id",
+      as: "users",
+      sourceKey: "id"
+
+    });
   };
   return Articles;
 };

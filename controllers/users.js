@@ -1,4 +1,4 @@
-const Users = require('../models').users;
+const Users = require('../models').Users;
 const bycrypt = require('bcrypt-nodejs');
 const Sequelize = require("sequelize");
 const jwt = require("jsonwebtoken");
@@ -18,7 +18,7 @@ exports.signup = (req, res) => {
             id: data.id
         }, 'MY-SECRET-KEY');
         res.status(200).send({
-            "item": data,
+            "email": data.email,
             token,
             "message": "User registered successfully!"
         });
@@ -44,7 +44,7 @@ exports.signIn = (req, res) => {
                     id: data.id
                 }, 'MY-SECRET-KEY');
                 res.status(200).send({
-                    "item": data,
+                    "email": data.email,
                     token,
                     "message": "User Success Login!"
 

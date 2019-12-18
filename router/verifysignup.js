@@ -1,4 +1,4 @@
-const Users = require('../models').users
+const Users = require('../models').Users
 checkDuplicateUserNameOrEmail = (req, res, next) => {
     // -> Check Username is already in use
     Users.findOne({
@@ -8,7 +8,7 @@ checkDuplicateUserNameOrEmail = (req, res, next) => {
     }).then(user => {
         if (user) {
             res.status(400).send("Fail -> Username is already taken!");
-            return;
+
         }
 
         // -> Check Email is already in use
