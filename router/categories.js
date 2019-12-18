@@ -3,4 +3,5 @@ module.exports = function (app) {
     app.post('/api/category', categories.addCateggories);
     app.get('/api/allcategory', categories.allCategories);
 
+
 }

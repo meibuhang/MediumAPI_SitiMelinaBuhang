@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
 
 require('./router/categories')(app);
 require('./router/user')(app);
-require('./router/routeArticles')(app)
+require('./router/Articles')(app)
 
 //listen to defined port
 app.listen(port, () => console.log("App listening at http://", port));

@@ -55,3 +55,47 @@ exports.allArticles = (req, res) => {
         })
     })
 }
+
+exports.articlesByCategory = (req, res) => {
+    console.log("Processing func -> Article by Category");
+    // const {
+    //     id_Cat
+    // } = req.params.idCat;
+    const id = req.params.idCat;
+    console.log(req.params.idCat);
+    tb_article.findAll({
+
+
+        include: [{
+                model: tb_cat,
+                as: 'categories',
+                attributes: [
+                    'id', 'name'
+                ]
+
+            },
+            {
+                model: tb_user,
+                as: 'users',
+                attributes: [
+                    'id', 'fullname'
+                ]
+
+            }
+        ],
+        where: {
+
+            category_id: id
+        },
+        order: [
+            ["createdAt", "DESC"],
+        ],
+        limit: 5
+    }).then(data => {
+        res.status(200).send({
+            is_success: 1,
+            message: "Success",
+            data: data
+        })
+    })
+}
