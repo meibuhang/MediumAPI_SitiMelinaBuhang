@@ -1,10 +1,9 @@
-const Categories = require('../models').Categories;
+const Categories = require('../models').Category;
 
 exports.addCateggories = (req, res) => {
     console.log("Processing func ->Categories");
     const name = req.body.name;
     const is_published = req.body.is_published;
-    console.log(req.body)
 
     const datas = {
         name: name,

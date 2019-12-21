@@ -8,9 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      author_id: {
-        type: Sequelize.INTEGER
-      },
       title: {
         type: Sequelize.STRING
       },
@@ -24,21 +21,33 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          onUpdate: 'cascade',
-          onDelete: 'cascade'
-        }
+          model: 'Category',
+          key: 'id'
+        },
+        onUpdate: 'cascade',
+        onDelete: 'cascade'
       },
       category_name: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       is_published: {
-        type: Sequelize.TINYINT
+        type: Sequelize.BOOLEAN
       },
-      is_archiver: {
-        type: Sequelize.TINYINT
+      is_archived: {
+        type: Sequelize.BOOLEAN
       },
       slug: {
         type: Sequelize.STRING
+      },
+      author_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'User',
+          key: 'id'
+        },
+        onUpdate: 'cascade',
+        onDelete: 'cascade'
       },
       createdAt: {
         allowNull: false,

@@ -1,7 +1,8 @@
-const Users = require('../models').Users;
+const Users = require('../models').User;
 const bycrypt = require('bcrypt-nodejs');
 const Sequelize = require("sequelize");
 const jwt = require("jsonwebtoken");
+const config = require('../config/config_secret.js');
 
 exports.signup = (req, res) => {
     console.log("Processing func ->Register");
@@ -16,7 +17,7 @@ exports.signup = (req, res) => {
     }).then(data => {
         const token = jwt.sign({
             id: data.id
-        }, 'MY-SECRET-KEY');
+        }, config.secret);
         res.status(200).send({
             "email": data.email,
             token,
@@ -42,7 +43,8 @@ exports.signIn = (req, res) => {
             if (auths) {
                 const token = jwt.sign({
                     id: data.id
-                }, 'MY-SECRET-KEY');
+                }, config.secret);
+
                 res.status(200).send({
                     "email": data.email,
                     token,
@@ -50,8 +52,8 @@ exports.signIn = (req, res) => {
 
                 });
             } else {
-                res.status(401).send({
-                    "message": "Invalid username or email"
+                res.status(400).send({
+                    "message": "Bad Request"
                 });
             }
         }

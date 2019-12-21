@@ -1,14 +1,25 @@
-const jwt = require("express-jwt");
+const jwt = require("jsonwebtoken");
+const config = require('./config/config_secret');
 
-exports.authenticated = jwt({
-    secret: process.env.SECRET_KEY
-});
 
+// Authorization: Bearer <token>
 exports.authorized = (req, res, next) => {
-    if (req.user.id != req.params.user_id) {
-        return res.status(401).json({
-            message: "You are not authenticated."
-        });
-    }
-    next();
-};
+    let authHeader = req.headers['authorization'];
+
+    if (!authHeader) return next(new Error('Require authorization header'));
+    let token = authHeader.split('Bearer ')[1];
+
+    jwt.verify(token, config.secret, (err, decoded) => {
+        if (err) {
+            return res.status(500).send({
+                auth: false,
+                message: 'Fail to Authentication. Error -> ' + err
+            });
+        }
+
+        // attach / set new field to request object
+        // you could access this field in the next request handler
+        req.userId = decoded.id
+        next();
+    });
+}

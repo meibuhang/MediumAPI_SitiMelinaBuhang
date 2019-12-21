@@ -12,10 +12,10 @@ module.exports = {
         type: Sequelize.STRING
       },
       is_published: {
-        type: Sequelize.TINYINT
+        type: Sequelize.BOOLEAN
       },
       is_archived: {
-        type: Sequelize.TINYINT
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
@@ -29,5 +29,6 @@ module.exports = {
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('Categories');
+    //category has many articles
   }
 };
