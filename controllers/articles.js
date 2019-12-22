@@ -1,7 +1,7 @@
 const tb_article = require("../models").Article;
 const tb_cat = require("../models").Category;
 const tb_user = require("../models").User;
-
+const tb_com = require("../models").Comment;
 //all articles
 exports.allArticles = (req, res) => {
     console.log("Processing func -> Add Category");
@@ -327,6 +327,50 @@ exports.articlesRelatedArticles = (req, res) => {
                 ["createdAt", "DESC"]
             ],
             limit: 3
+        })
+        .then(data => {
+            res.status(200).send({
+                is_success: 1,
+                message: "Success",
+                data: data
+            });
+        });
+};
+
+
+//list Detail Article
+exports.detailArticles = (req, res) => {
+    console.log("Processing func -> Detail");
+    // const {
+    //     id_Cat
+    // } = req.params.idCat;
+    const id = req.params.articleid;
+    console.log(id);
+    tb_article
+        .findOne({
+            include: [{
+                    model: tb_cat,
+                    as: "categories",
+                    attributes: ["id", "name"]
+                },
+                {
+                    model: tb_user,
+                    as: "users",
+                    attributes: ["id", "fullname"]
+                },
+                {
+                    model: tb_com,
+                    as: "comments",
+                    attributes: ["id", "comment","createdAt","updatedAt"]
+                }
+            ],
+            where: {
+                id: id
+            },
+            order: [
+                ["createdAt", "DESC"]
+            ],
+            limit: 5
         })
         .then(data => {
             res.status(200).send({
