@@ -27,9 +27,7 @@ exports.allCategories = (req, res) => {
     console.log("find All data");
     Categories.findAll().then(data => {
         res.status(200).send({
-            "item": data,
-            "message": "success",
-            "status": "OK"
+          category:data
         });
     }).catch(err => {
         res.status(500).json({

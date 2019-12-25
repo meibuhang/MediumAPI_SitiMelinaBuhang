@@ -8,8 +8,16 @@ module.exports = (sequelize, DataTypes) => {
       image: DataTypes.STRING,
       category_id: DataTypes.INTEGER,
       category_name: DataTypes.STRING,
-      is_published: DataTypes.BOOLEAN,
-      is_archived: DataTypes.BOOLEAN,
+      is_published: {
+        type:DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: 1
+      },
+      is_archived: {
+        type:DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: 0
+      },
       slug: DataTypes.STRING,
       author_id: DataTypes.INTEGER
     },
@@ -26,8 +34,7 @@ module.exports = (sequelize, DataTypes) => {
       as: "users",
       sourceKey: "id"
     });
-    Article.hasMany(models.Comment,
-      { foreignKey:"id", as: "comments"})
+    Article.hasMany(models.Comment, { foreignKey: "id", as: "comments" });
   };
   return Article;
 };

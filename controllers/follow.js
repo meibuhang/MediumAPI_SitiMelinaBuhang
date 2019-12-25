@@ -30,7 +30,7 @@ exports.addFollows=async (req,res,next) => {
                     }).then(data => {
                         res.status(200).json({
                             msg: "You Following :",
-                            Article: data
+                            follow: data
                         });
                             }) .catch(err => {
                                 res.status(400).json({

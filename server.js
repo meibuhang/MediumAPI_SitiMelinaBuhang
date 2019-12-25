@@ -10,13 +10,14 @@ app.use(bodyParser.urlencoded({
     extended: false
 })); // support encoded bodies
 app.use(express.static(path.resolve(__dirname, 'public')));
-app.use(cors()); //lintas antar port front and back
+
+app.use(cors({ origin: '*' }));//lintas antar port front and back
+// app.use(cors);
 const port = process.env.PORT || 8080;
 
 app.get("/", (req, res) => {
     res.send("Hello Express !");
 })
-
 
 require('./router/categories')(app);
 require('./router/user')(app);
