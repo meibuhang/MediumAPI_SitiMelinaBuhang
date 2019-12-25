@@ -194,18 +194,18 @@ exports.addArticleByCategory = (req, res) => {
         author_id: idUser,
         slug: slugify(req.body.title, { lower: true })
       };
-      // //   const errors = [];
-      // //   // validasi input
-      // //   if (!data.title) errors.push("`title` is required");
-      // //   if (!data.image) errors.push("`image` is required");
-      // //   if (!data.content) errors.push("`content` is required");
-      // //   if (!data.category_id) errors.push("`category_id` is required");
-      // //   const hasErrors = Boolean(errors.length);
-      // if (hasErrors) {
-      //   //     return res.status(422).json({
-      //   //       errors: errors
-      //   //     });
-      //   //   }
+        const errors = [];
+        // validasi input
+        if (!data.title) errors.push("`title` is required");
+        if (!data.image) errors.push("`image` is required");
+        if (!data.content) errors.push("`content` is required");
+        if (!data.category_id) errors.push("`category_id` is required");
+        const hasErrors = Boolean(errors.length);
+      if (hasErrors) {
+            return res.status(422).json({
+              errors: errors
+            });
+          }
       // todo: create article
       // todo: send article as json response
       tb_article.create(data).then(dataArticles => {
