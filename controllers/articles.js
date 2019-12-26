@@ -361,9 +361,26 @@ exports.articlesRelatedArticles = (req, res) => {
     });
 };
 
+
+const detailArticle = data => {
+  let newItem = {
+    id: data.id,
+    title: data.title,
+    content: data.content,
+    image: data.image,
+    category_id: data.categories.id,
+    category_name: data.categories.name,
+  author_id: data.users.id,
+    fullName: data.users.fullname,
+    createdAt: data.createdAt,
+    slug: slugify(data.title)
+  };
+  return newItem;
+};
 //list Detail Article
 exports.detailArticles = (req, res) => {
   console.log("Processing func -> Detail");
+  
   // const {
   //     id_Cat
   // } = req.params.idCat;
@@ -396,9 +413,13 @@ exports.detailArticles = (req, res) => {
     })
     .then(data => {
       res.status(200).send({
-        is_success: 1,
-        message: "Success",
-        data: data
+        articles:detailArticle(data)
       });
-    });
+    }) .catch(err => {
+      res.status(404).json({
+          msg: "Not Found",
+          Error: err
+      });
+  });
 };
+

@@ -2,8 +2,16 @@
 module.exports = (sequelize, DataTypes) => {
   const Comment = sequelize.define('Comment', {
     comment: DataTypes.TEXT,
-    is_published: DataTypes.BOOLEAN,
-    is_archived: DataTypes.BOOLEAN,
+    is_published: {
+      type:DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: 1
+    },
+    is_archived: {
+      type:DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: 0
+    },
     article_id: DataTypes.INTEGER,
     user_id: DataTypes.INTEGER
   }, {});
@@ -13,6 +21,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "article_id",
       as: "comments",
   
+    });
+    Comment.belongsTo(models.User, {
+      foreignKey: "user_id",
+      sourceKey:"id"
     });
   };
   return Comment;

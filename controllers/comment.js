@@ -39,7 +39,7 @@ exports.addComments = async (req, res, next) => {
                         ],
                         include: [{
                             model: tb_article,
-                            as: "articles",
+                            as: "comments",
                             attributes: ["id", "title"]
                         }],
                         attributes: {
@@ -162,3 +162,39 @@ exports.deleteComment = async (req, res, next) => {
     }
 
 };
+
+//see responses comment
+exports.detailComments = (req, res) => {
+    console.log("Processing func -> Detail");
+    
+    // const {
+    //     id_Cat
+    // } = req.params.idCat;
+    const id = req.params.idarticle;
+    console.log(id);
+    tb_comment
+      .findAll({
+        include: [
+          {
+            model: tb_article,
+            as :"comments",
+            attributes: ["id", "title"]
+          },
+          {
+            model: tb_user,
+            attributes: ["id", "fullname"]
+          },
+        ],
+        where: {
+          article_id: id
+        },
+        order: [["createdAt", "DESC"]],
+        limit: 5
+      })
+      .then(data => {
+        res.status(200).send({
+          comments : data
+        });
+      });
+  };
+  

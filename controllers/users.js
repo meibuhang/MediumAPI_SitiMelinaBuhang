@@ -52,8 +52,8 @@ exports.signIn = (req, res) => {
 
                 });
             } else {
-                res.status(400).send({
-                    "message": "Bad Request"
+                res.status(404).send({
+                    "message": "User not Found"
                 });
             }
         }
